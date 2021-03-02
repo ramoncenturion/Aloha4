@@ -1,25 +1,36 @@
-package Commands;
+package commands;
 
+import exceptions.DirectoryNotFoundException;
+import exceptions.InvalidFolderNameException;
 import interprete.Context;
 import interprete.Directory;
 
 public class Cd extends Command {
 
-	@Override
-	public String execute(String name, Context context) {
-		if (name.equals("..")) {
-			goToParentDirectory(name, context);
-		} else if (!isCorrectName(name)) {
-			return "Invalid Folder Name";
-		} else if (!existDirectory(name, context)) {
-			return "Directory not found";
-		} else {
-			Directory directory = context.getCarpetaActual().getDirectories().get(name);
-			context.setCarpetaActual(directory);
-		}
-		return "";
+	public Cd(Context context) {
+		super(context);
 	}
 
+	@Override
+	public String execute(String name) {
+		try {
+			if (name.equals("..")) {
+				goToParentDirectory(name, this.context);
+			} else if (!isCorrectName(name)) {
+				throw new InvalidFolderNameException();
+			} else if (!existDirectory(name, this.context)) {
+				throw new DirectoryNotFoundException();
+			} else {
+				Directory directory = this.context.getCarpetaActual().getDirectories().get(name);
+				this.context.setCarpetaActual(directory);
+			}
+			return "";
+		} catch (Exception e) {
+			return e.getMessage();
+		}
+	}
+
+	
 	private void goToParentDirectory(String name, Context context) {
 		Directory parent = context.getCarpetaActual().getParentDirectory();
 		context.setCarpetaActual(parent);

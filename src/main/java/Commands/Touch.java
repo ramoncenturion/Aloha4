@@ -1,22 +1,31 @@
-package Commands;
+package commands;
 
+import exceptions.FileAlreadyExistsException;
+import exceptions.InvalidFileNameException;
 import interprete.Context;
 import interprete.Directory;
 import interprete.File;
 
 public class Touch extends Command{
 
-	@Override
-	public String execute(String name, Context context) {
+	public Touch(Context context) {
+		super(context);
+	}
 
-		if (name.length() > 100 || name.split(" ").length > 1) {
-			return "Invalid File or Folder Name";
-		} else if (!existFile(context, name)){
-			Directory carpetaActual = context.getCarpetaActual();
-			carpetaActual.addFile(new File(name, carpetaActual));
-			return "";
-		} else {
-			return "File already exists";
+	@Override
+	public String execute(String name) {
+		try {			
+			if (name.length() > 100 || name.split(" ").length > 1) {
+				throw new InvalidFileNameException();
+			} else if (!existFile(context, name)){
+				Directory carpetaActual = this.context.getCarpetaActual();
+				carpetaActual.addFile(new File(name, carpetaActual));
+				return "";
+			} else {
+				throw new FileAlreadyExistsException();
+			}
+		} catch (Exception e) {
+			return e.getMessage();
 		}
 	}
 

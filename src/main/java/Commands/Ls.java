@@ -1,24 +1,33 @@
-package Commands;
+package commands;
 
 import java.util.Iterator;
 import java.util.Map;
 
+import exceptions.InvalidCommandException;
 import interprete.Context;
 import interprete.Directory;
 import interprete.File;
 
 public class Ls extends Command{
 
+	public Ls(Context context) {
+		super(context);
+	}
+
 	@Override
-	public String execute(String parameters, Context context) {
-		if (parameters.isEmpty()) {
-			// ls de la carpeta
-			return generateList(context);
-		} else if (parameters.equals("-r")) {
-			// ls recursivo
-			return generateRecursiveList(context);
-		} else {
-			return "Invalid Command";
+	public String execute(String parameters) {
+		try {
+			if (parameters.isEmpty()) {
+				// ls de la carpeta
+				return generateList(this.context);
+			} else if (parameters.equals("-r")) {
+				// ls recursivo
+				return generateRecursiveList(this.context);
+			} else {
+				throw new InvalidCommandException();
+			}
+		} catch (Exception e) {
+			return e.getMessage();
 		}
 	}
 
@@ -36,7 +45,7 @@ public class Ls extends Command{
 		});
 		Map<String, Directory> directories = carpeta.getDirectories();
 		directories.forEach((name,directoriesChild) -> {
-			list.append(name); 
+			list.append(directories.get(name).getPath()); 
 			list.append(System.lineSeparator ());
 			recursiveList(directoriesChild, list);
 		});
@@ -51,7 +60,7 @@ public class Ls extends Command{
 		});	
 		Map<String, File> files = context.getCarpetaActual().getFiles();
 		files.forEach((name,directoriesChild) -> {
-			result.append(name); 
+			result.append(name);
 			result.append(System.lineSeparator ());
 		});
 		return result.toString();

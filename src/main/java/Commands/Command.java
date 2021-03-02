@@ -1,8 +1,14 @@
-package Commands;
+package commands;
 
 import interprete.Context;
 
 public abstract class Command {
 
-	public abstract String execute(String parameters, Context context);
+	public Context context;
+	
+	Command(Context context){
+		this.context = context;
+	}
+	
+	public abstract String execute(String parameters);
 }

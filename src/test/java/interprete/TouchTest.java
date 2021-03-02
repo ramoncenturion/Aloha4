@@ -5,23 +5,23 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import commands.Mkdir;
+import commands.Touch;
 
-class mkdirTest {
-	
+class TouchTest {
+	static Touch touch;
 	static Context context;
-	static Mkdir mkdir;
 	
 	@BeforeAll
 	static void setup() {
 		context = new Context();
-		mkdir = new Mkdir(context);
+		touch = new Touch(context);
 	}
+	
 	@Test
 	void testExecution() {
-		String nameDir = "carpeta";
-		mkdir.execute(nameDir);
-		assertTrue(context.carpetaActual.getDirectories().containsKey(nameDir));
+		String nameFile = "archivo";
+		touch.execute(nameFile);
+		assertTrue(context.carpetaActual.getFiles().containsKey(nameFile));
 	}
 
 }

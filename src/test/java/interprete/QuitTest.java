@@ -5,23 +5,23 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import commands.Mkdir;
+import commands.Quit;
 
-class mkdirTest {
-	
+class QuitTest {
+
+
 	static Context context;
-	static Mkdir mkdir;
+	static Quit quit;
 	
 	@BeforeAll
 	static void setup() {
 		context = new Context();
-		mkdir = new Mkdir(context);
+		quit = new Quit(context);
 	}
+	
 	@Test
 	void testExecution() {
-		String nameDir = "carpeta";
-		mkdir.execute(nameDir);
-		assertTrue(context.carpetaActual.getDirectories().containsKey(nameDir));
+		assertEquals("exit",quit.execute(""));
 	}
 
 }

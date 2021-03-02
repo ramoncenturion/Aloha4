@@ -5,23 +5,27 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import commands.Cd;
 import commands.Mkdir;
 
-class mkdirTest {
+class CdTest {
 	
 	static Context context;
-	static Mkdir mkdir;
+	static Cd cd;
 	
 	@BeforeAll
 	static void setup() {
 		context = new Context();
-		mkdir = new Mkdir(context);
+		Mkdir mkdir = new Mkdir(context);
+		mkdir.execute("carpeta");
+		cd = new Cd(context);
 	}
+	
 	@Test
 	void testExecution() {
 		String nameDir = "carpeta";
-		mkdir.execute(nameDir);
-		assertTrue(context.carpetaActual.getDirectories().containsKey(nameDir));
+		cd.execute(nameDir);
+		assertEquals("/root/"+nameDir,context.carpetaActual.getPath());
 	}
 
 }
