@@ -3,6 +3,7 @@ package interprete;
 import java.util.*;
 
 import commands.*;
+import exceptions.UnrecognizedCommandException;
 
 public class Interpreter {
     
@@ -30,16 +31,13 @@ public class Interpreter {
         String command;
         String parameters;
         String [] split;
-        String unrecognizedCommand = "Unrecognized Command";
-    	
         try {
     		split = line.split(" ",0);
     		command = split[0];
     		parameters = split.length > 1? split[1] : "" ;
     		return commandsPool.get(command).execute(parameters);
     	} catch(Exception e) {
-    		System.out.println(e.getMessage());
-    		return unrecognizedCommand;
+    		return new UnrecognizedCommandException().getMessage();
     	}
     }
 }

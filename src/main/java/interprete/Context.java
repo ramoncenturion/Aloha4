@@ -10,7 +10,7 @@ public class Context {
 	Directory carpetaActual;
 	
 	public Context() {
-		this.carpetaActual = new Directory("root","carpeta");
+		this.carpetaActual = new Directory("root");
 	}
 
     public List<String> getSalida(){

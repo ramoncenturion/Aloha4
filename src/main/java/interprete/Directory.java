@@ -11,7 +11,7 @@ public class Directory {
 	Map<String, Directory> directories = new HashMap<String, Directory>();
 	Map<String, File> files = new HashMap<String, File>();
 			
-	public Directory(String name, String type) {
+	public Directory(String name) {
 		this.name = name;
 		this.path = "/"+name;
 	}
